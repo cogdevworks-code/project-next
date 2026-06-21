@@ -603,6 +603,7 @@ let loopOn=false, loopItems=[], loopPtr=0;
 function rLoop(){
   const v=$("#view");
   state.loopLang=state.loopLang||"ko"; state.loopRate=state.loopRate||1; state.loopGap=state.loopGap||0.6;
+  let mp3="audio/"+state.co+"_ko.mp3"; if(state.co==="mitech"&&state.loopLang==="en") mp3="audio/mitech_en.mp3";
   const panel=document.createElement("div"); panel.className="panel";
   panel.innerHTML=`<div class="row"><b>🎧 세뇌 모드 (자동 반복 듣기)</b></div>
     <div class="small" style="margin:6px 0">자기소개 + 핵심답변의 <b>간단버전(골격)</b>을 연속 재생·무한 반복합니다. 흘려들으며 세뇌하세요.</div>
@@ -613,9 +614,12 @@ function rLoop(){
     <input type="range" id="lRate" min="0.6" max="1.4" step="0.1" value="${state.loopRate}" style="width:100%">
     <div class="loopbig" id="loopText">⏸ 정지됨</div>
     <div class="row"><button class="btn p" id="loopToggle" style="flex:1">▶ 재생</button></div>
-    <div class="small" style="margin-top:8px">⚠️ 폰 화면이 꺼지면 멈출 수 있어요. 통근용 MP3는 곧 추가 예정. 화면 켜둔 채 들으세요.</div>`;
+    <div class="small" style="margin-top:8px">⚠️ 위 자동재생(TTS)은 폰 화면 꺼지면 멈출 수 있어요. <b>통근·잠금화면용은 아래 MP3</b>를 쓰세요.</div>
+    <div class="lbl" style="margin-top:14px">🎵 MP3 (잠금화면·통근용 — 무한반복)</div>
+    <audio id="mp3p" controls loop preload="none" style="width:100%; margin-top:4px" src="${mp3}"></audio>
+    <div class="small" style="margin-top:4px">${state.co==="mitech"?"엠아이텍":"디노티시아"} · ${state.loopLang==="en"?"English":"한국어"} 트랙 · 실제 음성파일이라 화면 꺼도 재생(호스팅 링크에서). 파일 단독 사용 시엔 audio 폴더 필요.</div>`;
   v.appendChild(panel);
-  $("#lLang").onchange=e=>{state.loopLang=e.target.value;saveState();};
+  $("#lLang").onchange=e=>{state.loopLang=e.target.value;saveState();rLoop();};
   $("#lRate").oninput=e=>{state.loopRate=+e.target.value; $("#rateV").textContent=state.loopRate; saveState();};
   $("#loopToggle").onclick=()=>{ if(loopOn){ stopLoop(); } else { startLoop(); } };
 }

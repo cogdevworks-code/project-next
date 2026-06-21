@@ -1,0 +1,6 @@
+node_modules/
+*.bak
+dnotitia_onepager.html
+gen_audio.js
+package.json
+package-lock.json
