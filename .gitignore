@@ -5,3 +5,6 @@ gen_audio.js
 package.json
 package-lock.json
 new_style.css
+index.plain.html
+build_encrypt.js
+test_decrypt.html
